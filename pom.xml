@@ -18,7 +18,7 @@
         <dependency>
             <groupId>org.vsdl.common.mmo</groupId>
             <artifactId>common-mmo-base</artifactId>
-            <version>1.0.4</version>
+            <version>1.0.5</version>
         </dependency>
         <dependency>
             <groupId>org.vsdl.common.rl</groupId>
