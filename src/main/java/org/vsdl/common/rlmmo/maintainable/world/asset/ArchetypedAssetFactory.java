@@ -12,6 +12,7 @@ public class ArchetypedAssetFactory {
         MaintainableAsset manufacturedAsset;
         switch (assetClass) {
             case ACTOR -> manufacturedAsset = new MaintainableActor(typedId);
+            case FEATURE -> manufacturedAsset = new MaintainableFeature(typedId);
             case FIELD -> throw new IllegalArgumentException("MaintainableField is not an Archetyped Asset.");
             default -> throw new IllegalArgumentException("Unsupported class: " + assetClass);
         }

@@ -4,6 +4,7 @@ import org.vsdl.common.rl.world.map.MapLoc;
 import org.vsdl.common.rlmmo.maintainable.world.WorldAssetClass;
 import org.vsdl.common.rlmmo.maintainable.world.asset.ArchetypedAssetFactory;
 import org.vsdl.common.rlmmo.maintainable.world.asset.MaintainableActor;
+import org.vsdl.common.rlmmo.maintainable.world.asset.MaintainableFeature;
 import org.vsdl.common.rlmmo.maintainable.world.map.MaintainableField;
 
 public class MaintainableFixture {
@@ -18,5 +19,9 @@ public class MaintainableFixture {
         MaintainableActor player = (MaintainableActor) assetFactory.manufactureAsset(WorldAssetClass.ACTOR, 0);
         player.setLocation(MapLoc.at(16, 16));
         return player;
+    }
+
+    public static MaintainableFeature getMaintainableFeature() {
+        return (MaintainableFeature) assetFactory.manufactureAsset(WorldAssetClass.FEATURE, 0);
     }
 }
