@@ -1,4 +1,4 @@
-package org.vsdl.common.rlmmo.maintainable;
+package org.vsdl.common.rlmmo.maintainable.fixtures;
 
 import org.vsdl.common.rl.world.map.MapLoc;
 import org.vsdl.common.rlmmo.maintainable.world.WorldAssetClass;

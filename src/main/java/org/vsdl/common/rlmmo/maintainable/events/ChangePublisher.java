@@ -5,7 +5,12 @@ import org.vsdl.common.mmo.consistency.MaintenanceTransactionRecord;
 
 import java.util.Deque;
 
-public interface ChangePublisher extends Registrable {
+public abstract class ChangePublisher implements Registrable {
 
-    void publish(Deque<MaintenanceTransactionRecord> changes);
+    public void publish(Deque<MaintenanceTransactionRecord> changes){
+        Thread t = new Thread(() -> doPublish(changes));
+        t.start();
+    }
+
+    protected abstract void doPublish(Deque<MaintenanceTransactionRecord> changes);
 }

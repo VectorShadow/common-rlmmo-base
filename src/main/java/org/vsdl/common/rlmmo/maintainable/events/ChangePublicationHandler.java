@@ -10,12 +10,12 @@ import java.util.List;
 
 import static java.util.Objects.nonNull;
 
-public abstract class MaintainableHandler implements EventHandler {
+public abstract class ChangePublicationHandler implements EventHandler {
     private Deque<MaintenanceTransactionRecord> changeLog;
 
-    private List<ChangePublisher> changePublishers = new ArrayList<>();
+    private final List<ChangePublisher> changePublishers = new ArrayList<>();
 
-    protected void resetChangeLog() {
+    private void resetChangeLog() {
         changeLog = new ArrayDeque<>();
     }
 
@@ -35,6 +35,7 @@ public abstract class MaintainableHandler implements EventHandler {
     }
 
     public void registerChangePublisher(ChangePublisher changePublisher) {
+        changePublisher.setRegistered(true);
         changePublishers.add(changePublisher);
     }
 

@@ -8,7 +8,7 @@ import org.vsdl.common.rl.world.asset.Actor;
 import org.vsdl.common.rl.world.asset.Feature;
 import org.vsdl.common.rl.world.map.Field;
 import org.vsdl.common.rl.world.map.MapLoc;
-import org.vsdl.common.rlmmo.maintainable.MaintainableFixture;
+import org.vsdl.common.rlmmo.maintainable.fixtures.MaintainableFixture;
 import org.vsdl.common.rlmmo.maintainable.world.asset.MaintainableActor;
 import org.vsdl.common.rlmmo.maintainable.world.asset.MaintainableFeature;
 import org.vsdl.common.rlmmo.maintainable.world.map.MaintainableField;
