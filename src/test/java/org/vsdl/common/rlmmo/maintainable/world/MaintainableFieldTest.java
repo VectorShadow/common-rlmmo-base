@@ -2,6 +2,7 @@ package org.vsdl.common.rlmmo.maintainable.world;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.vsdl.common.mmo.comm.Message;
 import org.vsdl.common.mmo.consistency.MaintenanceTransaction;
 import org.vsdl.common.mmo.consistency.MaintenanceTransactionRecord;
 import org.vsdl.common.rl.world.asset.Actor;
@@ -16,6 +17,8 @@ import org.vsdl.common.rlmmo.maintainable.world.map.MaintainableField;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.vsdl.common.mmo.comm.Message.unwrap;
+import static org.vsdl.common.mmo.comm.Message.wrap;
 
 public class MaintainableFieldTest {
 
@@ -87,5 +90,32 @@ public class MaintainableFieldTest {
         assertNotNull(actual);
         assertEquals(expected.getUUID(), actual.getUUID());
         assertEquals(expected.getVersion(), actual.getVersion());
+    }
+
+    @Test
+    void testRemoteCreateAndUpdate() {
+        field.initialize();
+        MaintainableField remoteField = (MaintainableField) unwrap(new String(wrap(new Message("test", field)))).getMessageContent(MaintainableField.class);
+        assertEquals(field.getUUID(), remoteField.getUUID());
+        assertEquals(field.getVersion(), remoteField.getVersion());
+        MaintainableActor player = MaintainableFixture.getMaintainableActor_Player();
+        MaintenanceTransactionRecord record = MaintenanceTransactionRecord.initializeRecord(field.getUUID(), field.getVersion());
+        MaintenanceTransaction transaction = new MaintenanceTransaction(Field.class.getCanonicalName(), "addActor", new Class[]{Actor.class}, new Object[]{player});
+        record.record(transaction);
+        MaintenanceTransactionRecord remoteTransactionRecord = (MaintenanceTransactionRecord) unwrap(new String(wrap(new Message("test", record)))).getMessageContent(MaintenanceTransactionRecord.class);
+        try {
+            record.applyTo(field);
+            remoteTransactionRecord.applyTo(remoteField);
+        } catch (Exception e) {
+            fail();
+        }
+        assertEquals(
+                ((MaintainableActor)field.getActorsAt(player.getLocation()).get(0)).getVersion(),
+                ((MaintainableActor)remoteField.getActorsAt(player.getLocation()).get(0)).getVersion()
+        );
+        assertEquals(
+                ((MaintainableActor)field.getActorsAt(player.getLocation()).get(0)).getUUID(),
+                ((MaintainableActor)remoteField.getActorsAt(player.getLocation()).get(0)).getUUID()
+        );
     }
 }
